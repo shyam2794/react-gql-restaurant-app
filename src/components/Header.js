@@ -30,25 +30,19 @@ const styles = {
 };
 
 class Example extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    isOpen: false
+  };
 
-    this.toggle = this.toggle.bind(this);
-    this.userLogout = this.userLogout.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
+  toggle = () =>
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
 
-  userLogout() {
+  userLogout = () => {
     localStorage.removeItem("id");
     this.props.history.push("/");
-  }
+  };
 
   render() {
     return (

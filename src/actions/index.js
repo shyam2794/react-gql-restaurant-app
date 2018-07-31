@@ -22,7 +22,7 @@ export const TABLE_DATA = "Table types entered in Table detail";
 export const TABLE_ORDER_LIST = "table bill from socket";
 export const TABLE_ADDED_BILL = "Added bill from socket";
 
-//const URL = `http://localhost:4000`;
+const URL = `http://localhost:4000`;
 
 export const signin = (values, callback) => dispatch => {
   axios
