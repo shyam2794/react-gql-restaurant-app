@@ -1,0 +1,14 @@
+div.container-fluid.test{
+  background:url('../bg3.jpg') center center no-repeat;
+   background-size:cover;
+  height:100vh;
+  color:white;
+  background-image: linear-gradient(to bottom right,#002f4b,#dc4225);
+  opacity: .7;
+}
+
+
+nav.fixed-top.navbar.navbar-expand-md.bg-dark
+{
+  background-color: #000 !important;
+}
