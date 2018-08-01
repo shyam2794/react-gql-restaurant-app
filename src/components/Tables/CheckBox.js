@@ -33,12 +33,7 @@ const styles = {
 };
 
 class CheckboxesGroup extends Component {
-  constructor(props) {
-    super(props);
-    this.handleCheckbox = this.handleCheckbox.bind(this);
-  }
-
-  handleCheckbox(table) {
+  handleCheckbox = table => {
     const { tableItem } = this.props;
     if (tableItem.length === 0) {
       //  console.log("table is empty");
@@ -64,7 +59,7 @@ class CheckboxesGroup extends Component {
       }
     }
     //this.props.tableDetail(table,this.props.tableItem);
-  }
+  };
 
   render() {
     // console.log(this.props) ;

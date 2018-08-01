@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 
 import * as actions from "../../actions";
-import { finalBillCalculator } from "./finalBillCalculator";
+import { finalBillCalculator } from "../../Utils/finalBillCalculator";
 
 const styles = {
   header: {

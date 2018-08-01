@@ -7,6 +7,7 @@ import { withRouter, Link } from "react-router-dom";
 import * as actions from "../../actions";
 import ShowBillInfo from "./showBillInfo";
 import ModalMessage from "./AlertMessage/Alert";
+import { formatDate } from "../../Utils/formatDate";
 
 const styles = {
   header: {
@@ -16,13 +17,7 @@ const styles = {
 
 class BillPrintContainer extends Component {
   billpaid = () => {
-    let q = new Date();
-    let m = q.getMonth() + 1;
-    let d = q.getDate();
-    let y = q.getFullYear();
-    if (m < 10) m = "0" + m;
-    if (d < 10) d = "0" + d;
-    let date = `${y}-${m}-${d}`;
+    let { date, year, month } = formatDate();
     //console.log(date);
     const { billinfo, billid } = this.props;
     let finalBill = !billinfo.finalBill
@@ -44,8 +39,8 @@ class BillPrintContainer extends Component {
       res_id: billinfo.res_id,
       table_id: billinfo.table_id,
       date: date,
-      year: y,
-      month: +m,
+      year: year,
+      month: +month,
       bill_no: Number(billid),
       table_type: billinfo.table_type,
       menu: filteredMenu,

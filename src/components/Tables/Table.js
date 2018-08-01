@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import * as actions from "../../actions";
 import BillDisplay from "./BillDisplay";
@@ -144,22 +143,11 @@ class Table extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      getTableOrders: actions.getTableOrders
-    },
-    dispatch
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    tableorder: state.tableorder
-  };
-}
+const mapStateToProps = state => ({
+  tableorder: state.tableorder
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  actions
 )(Table);

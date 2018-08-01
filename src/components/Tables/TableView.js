@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import * as actions from "../../actions";
 import SideBar from "./SideBar";
@@ -25,21 +24,17 @@ const styles = {
 };
 
 class Booking extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      checkedTable: []
-    };
-    this.handleCheckEvent = this.handleCheckEvent.bind(this);
-  }
+  state = {
+    checkedTable: []
+  };
 
-  handleCheckEvent(TableItem) {
+  handleCheckEvent = TableItem => {
     // console.log('in the parent component' , TableItem);
     let newTableItem = JSON.parse(JSON.stringify(TableItem));
     this.setState({
       checkedTable: newTableItem
     });
-  }
+  };
 
   componentDidMount() {
     // console.log('component did mount in table view');
@@ -99,24 +94,12 @@ class Booking extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      getTableDetails: actions.getTableDetails,
-      getOrdersForServe: actions.getOrdersForServe
-    },
-    dispatch
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    tableItem: state.tableItem,
-    Tables: state.tabledata
-  };
-}
+const mapStateToProps = state => ({
+  tableItem: state.tableItem,
+  Tables: state.tabledata
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  actions
 )(Booking);
