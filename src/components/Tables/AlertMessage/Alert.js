@@ -7,19 +7,14 @@ import success from "../../../Images/checked.png";
 import * as actions from "../../../actions";
 
 class ModalExample extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: true
-    };
+  state = {
+    modal: true
+  };
 
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle() {
+  toggle = () => {
     this.setState({ modal: false });
     this.props.toggleError();
-  }
+  };
 
   render() {
     // console.log("state in modal", this.state.modal);

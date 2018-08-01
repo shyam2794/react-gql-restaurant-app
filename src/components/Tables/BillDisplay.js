@@ -9,10 +9,11 @@ import {
   Table
 } from "reactstrap";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import * as actions from "../../actions";
 import { withRouter, Link } from "react-router-dom";
 import checked from "../../Images/checked.png";
+
+import { formatDate } from "../../Utils/formatDate";
 
 const styles = {
   Table: {
@@ -32,24 +33,14 @@ const styles = {
 };
 
 class AlertDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false,
-      GST: 0,
-      Gst_type: 0,
-      FinalBill: 0
-    };
+  state = {
+    modal: false,
+    GST: 0,
+    Gst_type: 0,
+    FinalBill: 0
+  };
 
-    this.toggle = this.toggle.bind(this);
-    this.applyGST = this.applyGST.bind(this);
-    this.renderOrderList = this.renderOrderList.bind(this);
-    this.menuOrderForBill = this.menuOrderForBill.bind(this);
-    this.onClickServedItem = this.onClickServedItem.bind(this);
-    this.renderTable = this.orderServedStatus.bind(this);
-  }
-
-  menuOrderForBill(finalbill) {
+  menuOrderForBill = finalbill => {
     let removeZero = this.props.tableorder.filter(value => value.count !== 0);
     let order = removeZero.filter(
       value =>
@@ -82,31 +73,25 @@ class AlertDialog extends React.Component {
         </tbody>
       </Table>
     );
-  }
+  };
 
   componentDidMount() {
     this.props.getOrdersForServe();
   }
 
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
-  }
+  toggle = () => this.setState({ modal: !this.state.modal });
 
-  onClickServedItem(order) {
+  onClickServedItem = order =>
     this.props.removeServedMenuItem(order, this.props.tableorder);
-  }
 
-  applyGST(Gst, amount, type) {
+  applyGST = (Gst, amount, type) =>
     this.setState({
       GST: Gst,
       Gst_type: type,
       FinalBill: amount
     });
-  }
 
-  orderServedStatus(order) {
+  orderServedStatus = order => {
     // console.log(order);
     return (
       <Table style={styles.Table}>
@@ -144,9 +129,9 @@ class AlertDialog extends React.Component {
         </tbody>
       </Table>
     );
-  }
+  };
 
-  renderOrderList() {
+  renderOrderList = () => {
     const { finalbill, orderListForServe } = this.props;
     // console.log(tableorder);
     // console.log(finalbill);
@@ -176,14 +161,7 @@ class AlertDialog extends React.Component {
         .substr(2)
     ];
 
-    let q = new Date();
-    let m = q.getMonth() + 1;
-    let d = q.getDate();
-    let y = q.getFullYear();
-    if (m < 10) m = "0" + m;
-    if (d < 10) d = "0" + d;
-
-    let billDate = `${y}-${m}-${d}`;
+    let billDate = formatDate().date;
 
     let billid = components.join("");
     return (
@@ -336,7 +314,7 @@ class AlertDialog extends React.Component {
         </ModalBody>
       </div>
     );
-  }
+  };
 
   render() {
     // console.log(this.props);
@@ -362,28 +340,14 @@ class AlertDialog extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      postHistory: actions.postHistory,
-      getTableOrders: actions.getTableOrders,
-      getOrdersForServe: actions.getOrdersForServe,
-      removeServedMenuItem: actions.removeServedMenuItem
-    },
-    dispatch
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    tableorder: state.tableorder,
-    orderListForServe: state.serveorder
-  };
-}
+const mapStateToProps = state => ({
+  tableorder: state.tableorder,
+  orderListForServe: state.serveorder
+});
 
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    actions
   )(AlertDialog)
 );
