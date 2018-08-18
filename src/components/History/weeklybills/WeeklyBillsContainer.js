@@ -43,7 +43,7 @@ class WeeklyBillsContainer extends Component {
   }
 
   render() {
-    console.log(this.props.weeklyOrders);
+    // console.log(this.props.weeklyOrders);
     const { weeklyOrders } = this.props;
 
     return (
@@ -109,13 +109,7 @@ class WeeklyBillsContainer extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    weeklyOrders: state.weeklyOrders.weeklyOrders
-  };
-}
-
 export default connect(
-  mapStateToProps,
+  state => ({ weeklyOrders: state.weeklyOrders.weeklyOrders }),
   actions
 )(WeeklyBillsContainer);

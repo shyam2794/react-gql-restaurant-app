@@ -50,8 +50,14 @@ class BillDisplayComponent extends Component {
               <ListGroupItem className="text-left" key={key}>
                 <Row key={key}>
                   <Col sm="9" md="9" lg="9" xs="9">
-                    <p>Bill No:{value.bill_no}</p>
-                    <p>Total:Rs.{value.Total.toFixed(2)}</p>
+                    <p>
+                      Bill No:
+                      {value.bill_no}
+                    </p>
+                    <p>
+                      Total:Rs.
+                      {value.Total.toFixed(2)}
+                    </p>
                   </Col>
                   <Col
                     className="align-items-center"
