@@ -6,7 +6,6 @@ import { Row, Col } from "reactstrap";
 
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import { bindActionCreators } from "redux";
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -17,14 +16,7 @@ const styles = theme => ({
 });
 
 class PaperSheet extends Component {
-  constructor(props) {
-    super(props);
-    this.deleteItem = this.deleteItem.bind(this);
-  }
-
-  deleteItem(id) {
-    this.props.deleteMenuFromDB(id);
-  }
+  deleteItem = id => this.props.deleteMenuFromDB(id);
 
   allMenu = (category, menuFromDB, classes, deleteicon) => {
     let menu = [];
@@ -46,7 +38,8 @@ class PaperSheet extends Component {
                     {value.name}
                   </Col>
                   <Col sm="6" xs="6" md="6" lg="6">
-                    - Rs.{value.price}
+                    - Rs.
+                    {value.price}
                   </Col>
                 </Row>
               </Paper>
@@ -82,20 +75,11 @@ class PaperSheet extends Component {
   }
 }
 
-const mapDispatchToProps = function(dispatch) {
-  return bindActionCreators(
-    {
-      deleteMenuFromDB: actions.deleteMenuFromDB
-    },
-    dispatch
-  );
-};
-
 PaperSheet.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default connect(
   null,
-  mapDispatchToProps
+  actions
 )(withStyles(styles)(PaperSheet));
