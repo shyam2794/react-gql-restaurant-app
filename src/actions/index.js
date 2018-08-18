@@ -8,11 +8,13 @@ export const DELETE_SERVED_ORDER_ITEM = "delete served order item";
 export const POST_HISTORY_SUCCESS = "POST_HISTORY_SUCCESS";
 export const POST_HISTORY_LOADING = "POST_HISTORY_LOADING";
 export const POST_HISTORY_FAILURE = "POST_HISTORY_FAILURE";
-export const POST_HISTORY_MESSAGE_TOGGLE = "POST_HISTORY_MESSAGE_TOGGLE";
+export const ERROR_MESSAGE_TOGGLE = "ERROR_MESSAGE_TOGGLE";
 export const GET_HISTORY_SUCCESS = "GET_HISTORY_SUCCESS";
 export const GET_HISTORY_LOADING = "GET_HISTORY_LOADING";
 export const GET_HISTORY_FAILURE = "GET_HISTORY_FAILURE";
-export const MENU_LIST_DB = "get menu from DB";
+export const MENU_LIST_DB_LOADING = "MENU_LIST_DB_LOADING";
+export const MENU_LIST_DB_SUCCESS = "MENU_LIST_DB_SUCCESS";
+export const MENU_LIST_DB_FAILURE = "MENU_LIST_DB_FAILURE";
 export const DELETE_MENU_ITEM = "delete menu item";
 export const CLEAR_MENU_ITEM = "CLEAR_MENU_ITEM";
 export const DELETE_MENU_ITEM_DB = "delete menu item from DB";
@@ -24,8 +26,8 @@ export const TABLE_DATA = "Table types entered in Table detail";
 export const TABLE_ORDER_LIST = "table bill from socket";
 export const TABLE_ADDED_BILL = "Added bill from socket";
 
-const URL = `http://farmbazaar.co.in:8072`;
-//const URL = `http://localhost:4000`;
+//const URL = `http://farmbazaar.co.in:8072`;
+const URL = `http://localhost:4000`;
 
 export const signin = (values, callback) => dispatch => {
   axios
@@ -193,13 +195,26 @@ export const getMenuFromDB = () => {
   return dispatch => {
     axios
       .get(`${URL}/getMenu/${id}`)
-      .then(response =>
+      .then(response => {
         dispatch({
-          type: MENU_LIST_DB,
+          type: MENU_LIST_DB_LOADING,
+          payload: {
+            loading: true
+          }
+        });
+        dispatch({
+          type: MENU_LIST_DB_SUCCESS,
           payload: response.data
+        });
+      })
+      .catch(err =>
+        dispatch({
+          type: MENU_LIST_DB_FAILURE,
+          payload: {
+            error_message: err
+          }
         })
-      )
-      .catch(err => console.log(err));
+      );
   };
 };
 
@@ -216,7 +231,7 @@ export const deleteMenuFromDB = id => dispatch => {
 };
 
 export const toggleError = () => ({
-  type: POST_HISTORY_MESSAGE_TOGGLE,
+  type: ERROR_MESSAGE_TOGGLE,
   payload: {
     error_toggle: false
   }
