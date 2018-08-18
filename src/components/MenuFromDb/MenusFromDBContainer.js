@@ -1,14 +1,27 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { Row, Col, Container } from "reactstrap";
+import { css } from "react-emotion";
+import { ClimbingBoxLoader } from "react-spinners";
 
 import * as actions from "./../../actions";
 import Header from "../Header";
 import RenderCategories from "./RenderCategories";
 import MenusFromDBRenderer from "./MenuListFromDBRenderer";
+import Networkmsg from "../../Images/networkerror.png";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const styles = {
+  errorMessage: {
+    display: "block",
+    margin: "0 auto",
+    marginTop: 200
+  },
   Message: {
     marginTop: "300px"
   },
@@ -24,6 +37,13 @@ const styles = {
     color: "white",
     marginTop: "100px",
     marginLeft: "0px"
+  },
+  spinnerContainer: {
+    marginTop: "200px",
+    padding: "30px",
+    WebkitBoxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)",
+    MozBoxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)",
+    boxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)"
   }
 };
 
@@ -43,9 +63,55 @@ class FinalMenuList extends Component {
     });
   };
 
+  renderLoadingSpinner = loading => {
+    return (
+      <Row>
+        <Col sm="4" md="4" lg="4" xs="4">
+          {" "}
+        </Col>
+        <Col className="text-center" sm="4" md="4" lg="4" xs="4">
+          <div style={styles.spinnerContainer}>
+            <ClimbingBoxLoader
+              className={override}
+              sizeUnit={"px"}
+              size={20}
+              color={"#123abc"}
+              loading={loading}
+            />{" "}
+            <br />
+            <h3 className="text-center"> Loading </h3>
+          </div>
+        </Col>
+        <Col sm="4" md="4" lg="4" xs="4" />
+      </Row>
+    );
+  };
   render() {
-    // console.log(this.props.menusFromDB);
-    if (!this.props.menusFromDB.length) {
+    const { loading, menuList, error } = this.props.menusFromDB;
+    console.log(this.props.menusFromDB);
+
+    if (error) {
+      return (
+        <Fragment>
+          <Header />
+          <img style={styles.errorMessage} src={Networkmsg} alt="" />
+          <p />
+          <h2 className="text-center">
+            {" "}
+            {`"Oops ${error.message} . Check your internet Connectivity"`}
+          </h2>
+        </Fragment>
+      );
+    }
+
+    if (loading) {
+      return (
+        <Fragment>
+          <Header />
+          {this.renderLoadingSpinner(loading)}
+        </Fragment>
+      );
+    } else if (!menuList.length) {
       return (
         <div>
           <Header />
@@ -72,7 +138,7 @@ class FinalMenuList extends Component {
       );
     }
 
-    let categories = this.props.menusFromDB.map((value, key) => value.category);
+    let categories = menuList.map((value, key) => value.category);
     let distinctCategories = [...new Set(categories)];
 
     return (
@@ -96,7 +162,7 @@ class FinalMenuList extends Component {
             </Col>
             <Col sm="9" md="9" xs="9" lg="9">
               <MenusFromDBRenderer
-                menusFromDB={this.props.menusFromDB}
+                menusFromDB={menuList}
                 category={this.state.category}
               />
             </Col>
@@ -107,22 +173,7 @@ class FinalMenuList extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      getMenuFromDB: actions.getMenuFromDB
-    },
-    dispatch
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    menusFromDB: state.menusFromDB
-  };
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  state => ({ menusFromDB: state.menusFromDB.menuFromDB }),
+  actions
 )(FinalMenuList);
