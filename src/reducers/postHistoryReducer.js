@@ -2,7 +2,7 @@ import {
   POST_HISTORY_LOADING,
   POST_HISTORY_SUCCESS,
   POST_HISTORY_FAILURE,
-  POST_HISTORY_MESSAGE_TOGGLE
+  ERROR_MESSAGE_TOGGLE
 } from "../actions";
 
 let initialState = {
@@ -38,7 +38,7 @@ export default function(state = initialState, action) {
         ...state,
         history: { historyOrder: [], error: error, loading: false }
       };
-    case POST_HISTORY_MESSAGE_TOGGLE:
+    case ERROR_MESSAGE_TOGGLE:
       return {
         ...state,
         history: {
