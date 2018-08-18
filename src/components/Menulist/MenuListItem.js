@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import { bindActionCreators } from "redux";
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -17,15 +16,7 @@ const styles = theme => ({
 });
 
 class PaperSheet extends Component {
-  constructor(props) {
-    super(props);
-
-    this.deleteItem = this.deleteItem.bind(this);
-  }
-
-  deleteItem(name) {
-    this.props.menulist(name);
-  }
+  deleteItem = name => this.props.menulist(name);
 
   render() {
     let deleteicon = {
@@ -71,20 +62,11 @@ class PaperSheet extends Component {
   }
 }
 
-const mapDispatchToProps = function(dispatch) {
-  return bindActionCreators(
-    {
-      menulist: actions.deleteMenuItem
-    },
-    dispatch
-  );
-};
-
 PaperSheet.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default connect(
   null,
-  mapDispatchToProps
+  actions
 )(withStyles(styles)(PaperSheet));

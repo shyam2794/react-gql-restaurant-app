@@ -8,27 +8,14 @@ import * as actions from "../../actions";
 import MenuListItem from "./MenuListItem";
 
 class MenuListRender extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onMenuSubmit = this.onMenuSubmit.bind(this);
-    this.getMenu = this.getMenu.bind(this);
-    this.refreshMenu = this.refreshMenu.bind(this);
-  }
-
-  onMenuSubmit() {
+  onMenuSubmit = () =>
     postMenu(this.props.menuItems, () =>
       this.props.history.push("/FinalMenuList")
     );
-  }
 
-  getMenu() {
-    this.props.history.push("/FinalMenuList");
-  }
+  getMenu = () => this.props.history.push("/FinalMenuList");
 
-  refreshMenu() {
-    this.props.clearMenuItem();
-  }
+  refreshMenu = () => this.props.clearMenuItem();
 
   render() {
     // console.log(this.props);

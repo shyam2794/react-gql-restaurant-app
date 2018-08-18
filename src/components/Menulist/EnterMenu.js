@@ -19,21 +19,14 @@ const styles = {
 };
 
 class EnterMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      menu: "",
-      cost: "",
-      course: "",
-      category: ""
-    };
+  state = {
+    menu: "",
+    cost: "",
+    course: "",
+    category: ""
+  };
 
-    this.onMenuInputChange = this.onMenuInputChange.bind(this);
-    this.onCostInputChange = this.onCostInputChange.bind(this);
-    this.onButtonClick = this.onButtonClick.bind(this);
-  }
-
-  onButtonClick(e) {
+  onButtonClick = e => {
     e.preventDefault();
     this.setState({
       menu: "",
@@ -48,31 +41,15 @@ class EnterMenu extends React.Component {
     };
     //console.log(menuitem);
     this.props.menulist(menuitem);
-  }
-
-  onMenuInputChange(e) {
-    this.setState({
-      menu: e.target.value
-    });
-  }
-
-  onCostInputChange(e) {
-    this.setState({
-      cost: e.target.value
-    });
-  }
-
-  onChooseCourse = course => {
-    this.setState({
-      course
-    });
   };
 
-  onCategoryChange = e => {
-    this.setState({
-      category: e.target.value
-    });
-  };
+  onMenuInputChange = e => this.setState({ menu: e.target.value });
+
+  onCostInputChange = e => this.setState({ cost: e.target.value });
+
+  onChooseCourse = course => this.setState({ course });
+
+  onCategoryChange = e => this.setState({ category: e.target.value });
 
   render() {
     let categories = [
