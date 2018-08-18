@@ -12,7 +12,7 @@ const styles = {
     margin: "5px 10px 0px 0px",
     paddingBottom: "10px",
     width: "350px",
-    height: "500px"
+    height: "600px"
   },
   table: {
     width: "100%"
@@ -32,6 +32,8 @@ class ShowBillInfo extends Component {
         value.table_type === props.billinfo.table_type
     );
 
+    const GST_NO = "33AAKFH1844DIZQ";
+
     return (
       <div style={styles.containerStyle}>
         <Row>
@@ -42,6 +44,7 @@ class ShowBillInfo extends Component {
             </h4>
             <h6 className="text-center"> 3/271H , L&T ByePass Road , </h6>
             <h6 className="text-center"> Venkittapuram , Coimbatore-62 </h6>
+            <h6 className="text-center"> GST NO: {GST_NO} </h6>
             <h6 className="text-center"> Ph: 9842691403 </h6>
           </Col>
         </Row>

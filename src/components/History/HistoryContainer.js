@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+import { css } from "react-emotion";
+import { ClimbingBoxLoader } from "react-spinners";
 
 import * as actions from "../../actions";
 import Header from "../Header";
 import BillDetail from "./BillDetail";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const styles = {
   header: {
@@ -21,18 +28,23 @@ const styles = {
   tabs: {
     marginTop: "100px"
   },
-  NoBillMessage: {
-    marginTop: "150px"
+  spinnerContainer: {
+    marginTop: "75px",
+    padding: "30px",
+    WebkitBoxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)",
+    MozBoxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)",
+    boxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)"
   }
 };
 
 class HistoryContainer extends Component {
   componentDidMount() {
-    this.props.getHistory();
+    this.props.getHistoryData();
   }
 
   render() {
     // console.log(this.props.history);
+    const { history } = this.props;
     return (
       <div>
         <Header />
@@ -63,40 +75,44 @@ class HistoryContainer extends Component {
               Bill History
             </Col>
           </Row>
-          <Row>
-            <Col className="text-center" sm="12" md="12" lg="12" xs="12">
-              {this.props.history.length ? (
-                <BillDetail BillList={this.props.history} />
-              ) : (
-                <h3 style={styles.NoBillMessage}>
-                  {" "}
-                  No Bills have been Generated{" "}
-                </h3>
-              )}
-            </Col>
-          </Row>
+          {!history.loading ? (
+            <Row>
+              <Col className="text-center" sm="12" md="12" lg="12" xs="12">
+                <BillDetail BillList={history.orders} />
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col sm="4" md="4" lg="4" xs="4">
+                {" "}
+              </Col>
+              <Col className="text-center" sm="4" md="4" lg="4" xs="4">
+                <div style={styles.spinnerContainer}>
+                  <ClimbingBoxLoader
+                    className={override}
+                    sizeUnit={"px"}
+                    size={20}
+                    color={"#123abc"}
+                    loading={history.loading}
+                  />{" "}
+                  <br />
+                  <h3 className="text-center"> Loading </h3>
+                </div>
+              </Col>
+              <Col sm="4" md="4" lg="4" xs="4" />
+            </Row>
+          )}
         </Container>
       </div>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      getHistory: actions.getHistory
-    },
-    dispatch
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    history: state.getHistory
-  };
-}
+const mapStateToProps = state => ({
+  history: state.getHistory.historyOrders
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  actions
 )(HistoryContainer);

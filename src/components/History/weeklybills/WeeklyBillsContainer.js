@@ -2,10 +2,18 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { css } from "react-emotion";
+import { ClimbingBoxLoader } from "react-spinners";
 
 import * as actions from "../../../actions";
 import Header from "../../Header";
 import WeeklyBillDisplayContainer from "./WeeklyBillDisplayContainer";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const styles = {
   header: {
@@ -20,8 +28,12 @@ const styles = {
   tabs: {
     marginTop: "100px"
   },
-  content: {
-    marginTop: "175px"
+  spinnerContainer: {
+    marginTop: "75px",
+    padding: "30px",
+    WebkitBoxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)",
+    MozBoxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)",
+    boxShadow: " 1px 0px 27px 5px rgba(0,0,0,0.75)"
   }
 };
 
@@ -31,8 +43,8 @@ class WeeklyBillsContainer extends Component {
   }
 
   render() {
-    // console.log(this.props.weeklyOrders);
-    let { weeklyOrders } = this.props;
+    console.log(this.props.weeklyOrders);
+    const { weeklyOrders } = this.props;
 
     return (
       <div>
@@ -64,23 +76,33 @@ class WeeklyBillsContainer extends Component {
               Weekly Bills
             </Col>
           </Row>
-          <Row>
-            <Col sm="12" md="12" lg="12" xs="12">
-              {this.props.weeklyOrders.length ? (
-                <div className="text-center">
-                  {" "}
-                  <WeeklyBillDisplayContainer
-                    weeklyOrders={weeklyOrders}
-                  />{" "}
+          {!weeklyOrders.processing && !weeklyOrders.loading ? (
+            <Row>
+              <Col className="text-center" sm="12" md="12" lg="12" xs="12">
+                <WeeklyBillDisplayContainer
+                  weeklyOrders={weeklyOrders.orders}
+                />
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col sm="4" md="4" lg="4" xs="4" />
+              <Col className="text-center" sm="4" md="4" lg="4" xs="4">
+                <div style={styles.spinnerContainer}>
+                  <ClimbingBoxLoader
+                    className={override}
+                    sizeUnit={"px"}
+                    size={20}
+                    color={"#123abc"}
+                    loading={true}
+                  />
+                  <br />
+                  <h3 className="text-center"> Loading </h3>
                 </div>
-              ) : (
-                <h3 style={styles.content} className="text-center">
-                  {" "}
-                  No Bills have been Generated{" "}
-                </h3>
-              )}
-            </Col>
-          </Row>
+              </Col>
+              <Col sm="4" md="4" lg="4" xs="4" />
+            </Row>
+          )}
         </Container>
       </div>
     );
@@ -89,7 +111,7 @@ class WeeklyBillsContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    weeklyOrders: state.weeklyOrders.weeklyOrders.orders
+    weeklyOrders: state.weeklyOrders.weeklyOrders
   };
 }
 

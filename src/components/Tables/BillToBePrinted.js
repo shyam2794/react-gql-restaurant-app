@@ -11,7 +11,7 @@ class BillToBePrinted extends Component {
 
   render() {
     const { weeklyOrders } = this.props;
-    // console.log(weeklyOrders);
+    //console.log(weeklyOrders);
     if (weeklyOrders.loading) {
       // console.log("loading");
       return (
@@ -22,7 +22,7 @@ class BillToBePrinted extends Component {
     } else if (!weeklyOrders.processing && !weeklyOrders.loading) {
       let billinfo = this.props.location.state;
       let lastBill = weeklyOrders.orders.slice(-1)[0];
-      // console.log("lastBill", lastBill);
+      //console.log("lastBill", lastBill);
 
       if (weeklyOrders.orders.length === 0 || billinfo.date !== lastBill.date) {
         let billid = `${billinfo.dateInbillid}001`;

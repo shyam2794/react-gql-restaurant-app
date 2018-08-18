@@ -9,7 +9,9 @@ export const POST_HISTORY_SUCCESS = "POST_HISTORY_SUCCESS";
 export const POST_HISTORY_LOADING = "POST_HISTORY_LOADING";
 export const POST_HISTORY_FAILURE = "POST_HISTORY_FAILURE";
 export const POST_HISTORY_MESSAGE_TOGGLE = "POST_HISTORY_MESSAGE_TOGGLE";
-export const GET_HISTORY = "get history data from DB";
+export const GET_HISTORY_SUCCESS = "GET_HISTORY_SUCCESS";
+export const GET_HISTORY_LOADING = "GET_HISTORY_LOADING";
+export const GET_HISTORY_FAILURE = "GET_HISTORY_FAILURE";
 export const MENU_LIST_DB = "get menu from DB";
 export const DELETE_MENU_ITEM = "delete menu item";
 export const CLEAR_MENU_ITEM = "CLEAR_MENU_ITEM";
@@ -22,7 +24,8 @@ export const TABLE_DATA = "Table types entered in Table detail";
 export const TABLE_ORDER_LIST = "table bill from socket";
 export const TABLE_ADDED_BILL = "Added bill from socket";
 
-const URL = `http://localhost:4000`;
+const URL = `http://farmbazaar.co.in:8072`;
+//const URL = `http://localhost:4000`;
 
 export const signin = (values, callback) => dispatch => {
   axios
@@ -53,7 +56,7 @@ export const clearMenuItem = () => ({
   payload: []
 });
 
-export const removeServedMenuItem = (order, allorders) => {
+export const removeServedMenuItem = order => {
   let updatedOrder = {};
   if (order.served_count !== order.count) {
     updatedOrder = {
@@ -155,6 +158,34 @@ export const getWeeklyOrders = () => dispatch => {
         }
       })
     );
+};
+
+export const getHistoryData = () => {
+  const id = localStorage.getItem("id");
+  return dispatch => {
+    axios
+      .get(`${URL}/getHistory/${id}`)
+      .then(response => {
+        dispatch({
+          type: GET_HISTORY_LOADING,
+          payload: {
+            loading: true
+          }
+        });
+        dispatch({
+          type: GET_HISTORY_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_HISTORY_FAILURE,
+          payload: {
+            error_message: err
+          }
+        })
+      );
+  };
 };
 
 export const getMenuFromDB = () => {
@@ -260,21 +291,6 @@ export const postHistory = bill => {
           }
         })
       );
-  };
-};
-
-export const getHistory = () => {
-  const id = localStorage.getItem("id");
-  return dispatch => {
-    axios
-      .get(`${URL}/getHistory/${id}`)
-      .then(response =>
-        dispatch({
-          type: GET_HISTORY,
-          payload: response.data
-        })
-      )
-      .catch(err => console.log(err));
   };
 };
 

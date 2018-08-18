@@ -17,7 +17,7 @@ class DateList extends Component {
     const { weeklyOrders } = this.props;
 
     let dates = weeklyOrders.map(value => value.date);
-    let uniqueDates = [...new Set(dates)];
+    let uniqueDates = [...new Set(dates)].reverse();
     return (
       <div>
         <ListGroup>
