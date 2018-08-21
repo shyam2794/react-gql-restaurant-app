@@ -144,30 +144,30 @@ class FinalMenuList extends Component {
     return (
       <div>
         <Header />
-        <Container>
-          <Row>
-            <Col sm="3" md="3" xs="3" lg="3">
-              <h5 style={styles.header} className="text-center">
-                {" "}
-                Categories{" "}
-              </h5>
-              <Row>
-                <Col sm="12" md="12" xs="12" lg="12">
-                  <RenderCategories
-                    categories={distinctCategories}
-                    onClickEvent={this.onClickCategory}
-                  />
-                </Col>
-              </Row>
-            </Col>
-            <Col sm="9" md="9" xs="9" lg="9">
-              <MenusFromDBRenderer
-                menusFromDB={menuList}
-                category={this.state.category}
-              />
-            </Col>
-          </Row>
-        </Container>
+        <Row>
+          <Col sm="1" md="1" xs="1" lg="1" />
+          <Col sm="2" md="2" xs="2" lg="2">
+            <h5 style={styles.header} className="text-center">
+              {" "}
+              Categories{" "}
+            </h5>
+            <Row>
+              <Col sm="12" md="12" xs="12" lg="12">
+                <RenderCategories
+                  categories={distinctCategories}
+                  onClickEvent={this.onClickCategory}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col sm="8" md="8" xs="8" lg="8">
+            <MenusFromDBRenderer
+              menusFromDB={menuList}
+              category={this.state.category}
+            />
+          </Col>
+          <Col sm="1" md="1" xs="1" lg="1" />
+        </Row>
       </div>
     );
   }

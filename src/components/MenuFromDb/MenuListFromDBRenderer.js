@@ -49,6 +49,7 @@ class MenusFromDBRenderer extends Component {
           </Col>
           <Col sm="4" md="4" lg="4" xs="4" />
         </Row>
+        <p />
         <Row>
           <Col sm="12" md="12" xs="12" lg="12">
             <MenuItemFromDB {...this.props} />

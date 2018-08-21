@@ -1,24 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import React, { Component, Fragment } from "react";
+import { Card, CardBody, CardTitle, CardSubtitle, Button } from "reactstrap";
 import { Row, Col } from "reactstrap";
 
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 
-const styles = theme => ({
-  root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3
-  })
-});
+const styles = {
+  menuItem: {
+    marginTop: 10
+  }
+};
 
 class PaperSheet extends Component {
   deleteItem = id => this.props.deleteMenuFromDB(id);
 
-  allMenu = (category, menuFromDB, classes, deleteicon) => {
+  allMenu = (category, menuFromDB, deleteicon) => {
     let menu = [];
     if (category === "All") {
       menu = menuFromDB.map(value => value);
@@ -26,60 +22,73 @@ class PaperSheet extends Component {
       menu = menuFromDB.filter(value => value.category === category);
     }
 
-    return menu.map((value, key) => {
-      return (
-        <div key={`${value.name}-${key}`}>
-          <Row>
-            <Col sm="2" xs="2" md="2" lg="2" />
-            <Col sm="7" xs="7" md="7" lg="7">
-              <Paper className={classes.root} elevation={4}>
+    return (
+      <Row>
+        {menu.map((value, key) => {
+          return (
+            <Col
+              style={styles.menuItem}
+              key={`${value.name}-${key}`}
+              sm="4"
+              xs="4"
+              md="4"
+              lg="4"
+            >
+              <Card>
                 <Row>
-                  <Col className="text-right" sm="6" xs="6" md="6" lg="6">
-                    {value.name}
-                  </Col>
-                  <Col sm="6" xs="6" md="6" lg="6">
-                    - Rs.
-                    {value.price}
-                  </Col>
+                  <CardBody>
+                    <CardTitle>{value.name}</CardTitle>
+                    <CardSubtitle>
+                      Rs.
+                      {Number(value.price).toFixed(2)}
+                    </CardSubtitle>
+                  </CardBody>
                 </Row>
-              </Paper>
+                <Row>
+                  <Col sm="2" md="2" lg="2" xs="2" />
+                  <Col sm="9" md="9" lg="9" xs="9">
+                    <p className="text-right">
+                      <Button
+                        onClick={() => this.deleteItem(value.id)}
+                        color="danger"
+                      >
+                        <i
+                          className="fa fa-trash"
+                          style={deleteicon.fonticon}
+                          onClick={() => this.deleteItem(value.id)}
+                          aria-hidden="true"
+                        />
+                      </Button>
+                    </p>
+                  </Col>
+                  <Col sm="1" md="1" lg="1" xs="1" />
+                </Row>
+              </Card>
             </Col>
-            <Col sm="3" xs="3" md="3" lg="3">
-              <i
-                className="fa fa-trash"
-                style={deleteicon.fonticon}
-                onClick={() => this.deleteItem(value.id)}
-                aria-hidden="true"
-              />
-            </Col>
-          </Row>
-          <br />
-        </div>
-      );
-    });
+          );
+        })}
+      </Row>
+    );
   };
 
   render() {
     // console.log('menu item from DB' , this.props);
     let deleteicon = {
       fonticon: {
-        marginTop: "25px",
-        fontSize: "2em"
+        fontSize: "1em"
       }
     };
-    const { category, classes, menusFromDB } = this.props;
+    const { category, menusFromDB } = this.props;
     // console.log(this.props);
     return (
-      <div>{this.allMenu(category, menusFromDB, classes, deleteicon)}</div>
+      <div>
+        {this.allMenu(category, menusFromDB, deleteicon)} <p />
+      </div>
     );
   }
 }
 
-PaperSheet.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
 export default connect(
   null,
   actions
-)(withStyles(styles)(PaperSheet));
+)(PaperSheet);
