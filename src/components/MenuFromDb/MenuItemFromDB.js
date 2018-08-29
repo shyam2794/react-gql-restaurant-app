@@ -68,7 +68,7 @@ class PaperSheet extends Component {
                         }}
                       >
                         {" "}
-                        Rs.
+                        ₹-
                         {Number(value.price).toFixed(2)}
                       </h5>
                     </Col>
