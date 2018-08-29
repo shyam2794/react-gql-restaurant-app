@@ -146,7 +146,7 @@ class FinalMenuList extends Component {
         <Header />
         <Row>
           <Col sm="1" md="1" xs="1" lg="1" />
-          <Col sm="2" md="2" xs="2" lg="2">
+          <Col class="text-center" sm="2" md="2" xs="2" lg="2">
             <h5 style={styles.header} className="text-center">
               {" "}
               Categories{" "}

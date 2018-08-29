@@ -8,11 +8,12 @@ const styles = {
   header: {
     fontFamily: "Raleway , Dosis",
     fontSize: "24px",
-    backgroundColor: "#B3E5FC",
+    backgroundColor: "black",
     padding: "5px 0px",
     borderRadius: "5px",
     fontWeight: "bold",
-    marginTop: "100px"
+    marginTop: "100px",
+    color: "white"
   },
   buttonStyles: {
     marginTop: 10
