@@ -6292,7 +6292,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.6.0:
+prop-types@^15.5.10:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -6595,12 +6595,11 @@ react-spinners@0.4.8:
     react-emotion "^9.1.1"
     recompose "0.27.1 - 0.30.0"
 
-react-to-print@1.0.21:
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-1.0.21.tgz#f6713c5c0ac06dc8c079937e4b7cecd6dbc8d630"
+react-to-print@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-2.5.1.tgz#eaaff4248910f179788ab15a593ceb3e07527b8c"
   dependencies:
-    prop-types "^15.6.0"
-    react "^16.2.0"
+    prop-types "^15.7.2"
 
 react-transition-group@^2.3.1:
   version "2.9.0"
@@ -6620,7 +6619,7 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@16.12.0, react@^16.2.0:
+react@16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
   dependencies:
